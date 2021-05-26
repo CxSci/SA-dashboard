@@ -1,0 +1,38 @@
+/* eslint-disable no-undef */
+import React from "react";
+import renderer from "react-test-renderer";
+import SASearchField from "../components/SASearchField";
+import { preRender } from "./testUtils";
+import Enzyme from 'enzyme';
+import { resetState } from "../redux/action-creators";
+import { store } from "../redux/store";
+import { loadFeatures } from "../redux/reducer";
+import {loadGeoJSON} from './testUtils';
+const {act} = renderer
+
+beforeEach(() => {
+  resetState()
+  fetchMock.mockIf("SA_dashboard.geojson", loadGeoJSON("./src/data/SA_dashboard.geojson"))
+  act(()=>{store.dispatch(loadFeatures())})
+})
+
+it("renders correctly", async () => {
+  const tree = renderer.create(preRender(<SASearchField />, store)).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
+it("render dropdown on search input", async () => {
+  const event = {target: {value: "ad"}};
+  const component = Enzyme.mount(preRender(<SASearchField />, store));
+  component.find('input').simulate('mouseEnter').simulate('change', event)
+  expect(component.debug()).toMatchSnapshot();
+
+})
+
+it("can select feature", () => {
+  const event = {target: {value: "ad"}};
+  const component = Enzyme.mount(preRender(<SASearchField />, store));
+  component.find('input').simulate('mouseEnter').simulate('change', event)
+  component.find("#downshift-16-item-0").simulate("click")
+})
+//

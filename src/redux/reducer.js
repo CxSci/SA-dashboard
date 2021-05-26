@@ -113,8 +113,9 @@ function loadFeatures() {
         (collection) =>
           dispatch({ type: "FEATURES", payload: collection.features }),
         // TODO: Add proper error handling
-        (error) => {
-          console.log(error);
+        // eslint-disable-next-line no-unused-vars
+        (_error) => {
+          //console.error(error);
         }
       );
   };
@@ -143,6 +144,8 @@ function reducer(state = initialState, action) {
         ...state,
         showWelcomeDialog: action.payload,
       };
+    case "RESET":
+      return initialState;
     case "Header":
       return Object.assign({}, state, {
         path: action.payload,
