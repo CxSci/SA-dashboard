@@ -1,7 +1,42 @@
 version: '3'
-
 services:
+  db:
+    build: ./api/database
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+    volumes:
+      - ./src/data/SA2_info_for_dashboard.csv:/data/SA2_info_for_dashboard.csv
+      - ./src/data/SA_SA2s.geojson:/data/SA_SA2s.geojson
+      - ./src/data/SA_SA2s.csv:/data/SA_SA2s.csv
+      - ./api/database/init_database.py:/data/init_database.py
+      - ./api/database/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+  api:
+    build: ./api
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./api:/app
+    environment:
+      - FLASK_ENV=${FLASK_ENV}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+    depends_on:
+      - db
+    command: sh -c './wait-for db:5432 -- python app.py'
   dashboard:
     build: .
     ports:
-      - '0.0.0.0:80:3000'
+      - '3000:3000'
+    volumes:
+      - /usr/src/app
+    depends_on:
+      - api
