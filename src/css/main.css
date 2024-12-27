@@ -1,0 +1,12 @@
+.main {
+    display: flex;
+    flex-direction: column;    
+}
+
+.viewer-container {
+    padding-top: 60px;
+    width: 100%;
+    display: flex;
+    overflow: auto;
+    justify-content: center;
+}

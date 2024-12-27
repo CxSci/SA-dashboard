@@ -1,0 +1,98 @@
+.sidebarOpen .legend, .sidebarOpen .toggleButton, .sidebarOpen .container {
+    left: 320px;
+}
+
+.sidebarClosed .featureSelected .sidebar-container {
+    display: none;
+}
+
+.panel-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.sidebar-container {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    background-color: white;
+    z-index: 2;
+    width: 320px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), 0px -1px 0px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-content {
+    flex-grow: 1; 
+    flex-shrink: 0; 
+    flex-basis: 0;
+    overflow-y: auto;
+}
+
+.toggleButton {
+    pointer-events: auto;
+    cursor: pointer;
+    top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+
+    position: absolute;
+    width: 20px;
+    height: 40px;
+        
+    background: #FFFFFF;
+    /* Scratch/Standard Drop Shadow */
+    
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), 0px -1px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 0px 5px 5px 0px;
+    
+}
+
+
+.panel-container.noFeatureSelected {
+    position: absolute;
+    pointer-events: none;
+}
+
+.panel-container.noFeatureSelected .sidebar-container {
+    background: transparent;
+    box-shadow: none;
+}
+
+.panel-container.noFeatureSelected .toggleButton {
+    display: none;
+}
+
+.actionButtonsContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 1px 0px 12px;
+}
+
+.actionButton {
+    display: flex;
+    align-items: center;
+    padding: 8px 20px 8px 30px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #000000;
+}
+
+.icon {
+    margin-right: 12px;
+}
+
+.comparison-title {
+    display: flex;
+    align-items: center;
+    color: #000000;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 23px;
+    padding: 19px 20px 13px 20px;
+}
